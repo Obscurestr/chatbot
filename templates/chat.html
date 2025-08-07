@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Chatbot with memory</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<div class="chat-container">
+  <h2>Chat with Bot</h2>
+  <div>
+    {% for msg in history %}
+      <p>{{ msg }}</p>
+    {% endfor %}
+  </div>
+
+  {% if pending %}
+    <form method="post" action="/learn">
+      <p>How would you answer to: "{{ pending }}"?</p>
+      <input type="text" name="answer" required>
+      <button class="button-send" type="submit">Send answer</button>
+    </form>
+  {% else %}
+    <form method="post">
+      <input type="text" name="message" required>
+      <button class="button-send" type="submit">Send</button>
+    </form>
+  <form action="{{ url_for('reset') }}" method="get" style="display: inline;">
+  <button class="button-restart" type="submit">Restart</button>
+</form>
+  {% endif %}
+</div>
+</body>
+</html>
